@@ -2,6 +2,9 @@
 const {
   Model, UUIDV4
 } = require('sequelize');
+
+const {hashPassword} = require("../helpers/bcrypt")
+
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     /**
@@ -92,5 +95,10 @@ module.exports = (sequelize, DataTypes) => {
     sequelize,
     modelName: 'Users',
   });
+
+  Users.beforeCreate((instance)=>{
+    instance.password = hashPassword(instance.password);
+  })
+
   return Users;
 };
