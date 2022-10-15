@@ -1,0 +1,41 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "postgres",
+    "database": "web_suhu",
+    "host": "127.0.0.1",
+    "dialect": "postgresql"
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "use_env_variable": "DATABASE_URL",
+    "ssl": true,
+    "dialect": "postgres",
+    "protocol": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "define": {
+    "underscored": true,
+    "freezeTableName": true,
+    "charset": "utf8",
+    "dialectOptions": {
+      "collate": "utf8_general_ci"
+    },
+    "timestamps": true,
+    "createdAt": "date_created",
+    "updatedAt": "date_modified",
+    "createdBy": "created_by",
+    "updatedBy": "updated_by"
+  }
+}
