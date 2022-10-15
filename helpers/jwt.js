@@ -1,7 +1,8 @@
 const jwt = require('jsonwebtoken')
 
 let generateToken = (payload) =>{
-    return jwt.sign(payload.process.env.JWT_TOKEN)
+    console.log(jwt.sign(payload,process.env.JWT_TOKEN))
+    return jwt.sign(payload,process.env.JWT_TOKEN)
 }
 
 let verifyToken = (payload) =>{

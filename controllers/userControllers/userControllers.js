@@ -24,8 +24,10 @@ let login = async (req,res,next) =>{
         let checkUser = await Users.findOne({username: username})
         if(checkUser){
             let checkPassword = matchPassword(password,checkUser.password)
+            console.log(checkPassword)
             if(checkPassword){
-                let accessToken = generateToken({id:checkUser.id, email:checkUser.email,phoneNumber:checkUser.phoneNumber})
+                let accessToken = await generateToken({id:checkUser.id, email:checkUser.email,phoneNumber:checkUser.phoneNumber})
+                console.log(accessToken,'<<<<<<<<<<<<<<<<<<<<<<<<<<')
                 res.status(200).json({accessToken:accessToken})
             } else {
                 res.status(404).json({message:"Wrong Password"})
