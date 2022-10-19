@@ -2,61 +2,57 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Users', {
+    await queryInterface.createTable('Suhus', {
       id: {
         allowNull: false,
         defaultValue:Sequelize.UUIDV4,
         primaryKey: true,
         type: Sequelize.UUID
       },
-      role: {
+      temp: {
         type: Sequelize.STRING
       },
-      username: {
-        type: Sequelize.STRING,
-        unique: true
+      humid: {
+        type: Sequelize.STRING
       },
-      phoneNumber: {
+      lat: {
+        type: Sequelize.STRING
+      },
+      lon: {
+        type: Sequelize.STRING
+      },
+      UserId: {
         type: Sequelize.STRING
       },
       isDeleted: {
         type: Sequelize.BOOLEAN
       },
-      password: {
-        type: Sequelize.STRING
-      },
-      email: {
-        type: Sequelize.STRING
-      },
-      rfid: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
+      date_created: {
         allowNull: false,
         type: Sequelize.DATE,
         underscored: true
       },
-      createdBy:{
+      created_by:{
         allowNull: false,
         type:Sequelize.STRING,
         defaultValue:"System"
       },
-      updatedAt: {
+      date_modified: {
         type: Sequelize.DATE,
         underscored: true
       },
-      updatedBy: {
+      modified_by: {
         type: Sequelize.STRING,
       },
-      deletedAt: {
+      date_deleted: {
         type: Sequelize.DATE,
       },
-      deletedBy: {
+      deleted_by: {
         type: Sequelize.STRING,
       }
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Users');
+    await queryInterface.dropTable('Suhus');
   }
 };

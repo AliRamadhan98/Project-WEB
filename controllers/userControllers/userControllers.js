@@ -21,10 +21,9 @@ let register = async (req,res,next) => {
 let login = async (req,res,next) =>{
     let {username,password} = req.body
     try {
-        let checkUser = await Users.findOne({username: username})
+        let checkUser = await Users.findOne({where:{username: username}})
         if(checkUser){
             let checkPassword = matchPassword(password,checkUser.password)
-            console.log(checkPassword)
             if(checkPassword){
                 let accessToken = await generateToken({id:checkUser.id, email:checkUser.email,phoneNumber:checkUser.phoneNumber})
                 res.status(200).json({accessToken:accessToken})
@@ -40,11 +39,12 @@ let login = async (req,res,next) =>{
 }
 
 let inputRfId = async (req,res,next) =>{
-    let {username,refId} = req.body
+    let {refId} = req.body
+    let {username} = req.user
     try {
         let checkUser = await Users.findOne({where:{username:username}})
         if(checkUser){
-            let insertRfId = await Users.Update({rfid:refId,role:"admin"}).where({username:username})
+            let insertRfId = await Users.update({rfid:refId,role:"admin"},{where:{username:username},individualHooks:true})
             res.status(200).json({message:"Add RFID Successfull"})
         } else {
             res.status(400).json({message:"User Not Found"})
@@ -54,5 +54,18 @@ let inputRfId = async (req,res,next) =>{
     }
 }
 
+let detailProfile = async (req,res,next) =>{
+    let {userId} = req.body
+    try {
+        let detailUser = await Users.findByPk(userId)
+        if(detailUser){
+            res.status(200).json({message:detailUser})
+        } else {
+            res.status(404).json({message:"User Not Found"})
+        }
+    } catch (error) {
+        res.status(500).json({message:error.message})
+    }
+}
 
-module.exports ={register,inputRfId,login}
+module.exports ={register,inputRfId,login,detailProfile}
