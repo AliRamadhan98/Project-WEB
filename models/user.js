@@ -1,12 +1,11 @@
 'use strict';
 const {
-  Model, UUIDV4
+  Model
 } = require('sequelize');
-
-const {hashPassword} = require("../helpers/bcrypt")
+const { hashPassword } = require('../helpers/bcrypt');
 
 module.exports = (sequelize, DataTypes) => {
-  class Users extends Model {
+  class User extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -14,15 +13,15 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Users.hasMany(models.Suhu)
+      User.hasMany(models.Suhu)
     }
   }
-  Users.init({
+  User.init({
     id:{
       allowNull: false,
-      defaultValue:UUIDV4,
+      defaultValue:DataTypes.UUIDV4,
       primaryKey: true,
-      type: UUIDV4
+      type: DataTypes.UUIDV4
     },
     role: DataTypes.STRING,
     username: {
@@ -88,18 +87,27 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     rfid: DataTypes.STRING,
-    createdBy: DataTypes.STRING,
-    updatedBy: DataTypes.STRING,
-    deletedAt: DataTypes.DATE,
-    deletedBy: DataTypes.STRING,
+    date_created:DataTypes.DATE,
+    created_by: DataTypes.STRING,
+    date_modified: DataTypes.DATE,
+    modified_by: DataTypes.STRING,
+    date_deleted: DataTypes.DATE,
+    deleted_by: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Users',
+    createdAt:"date_created",
+    deletedAt:"date_deleted",
+    updatedAt:"date_modified",
   });
 
-  Users.beforeCreate((instance)=>{
+  User.beforeCreate((instance)=>{
+    instance.date_modified = null
     instance.password = hashPassword(instance.password);
   })
 
-  return Users;
+  User.beforeUpdate((instance) =>{
+    instance.modified_by = instance.email
+  })
+  return User;
 };

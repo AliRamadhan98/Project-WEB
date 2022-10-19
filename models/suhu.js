@@ -1,6 +1,6 @@
 'use strict';
 const {
-  Model, UUIDV4
+  Model
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Suhu extends Model {
@@ -17,16 +17,38 @@ module.exports = (sequelize, DataTypes) => {
   Suhu.init({
     id:{
       allowNull: false,
-      defaultValue:UUIDV4,
+      defaultValue:DataTypes.UUIDV4,
       primaryKey: true,
-      type: UUIDV4
+      type: DataTypes.UUIDV4
     },
-    suhu: DataTypes.STRING,
-    userId: DataTypes.STRING,
-    isDeleted: DataTypes.BOOLEAN
-  }, {
+    temp: DataTypes.STRING,
+    humid: DataTypes.STRING,
+    lat: DataTypes.STRING,
+    lon: DataTypes.STRING,
+    UserId: DataTypes.STRING,
+    isDeleted: DataTypes.BOOLEAN,
+    date_created:DataTypes.DATE,
+    created_by: DataTypes.STRING,
+    date_modified: DataTypes.DATE,
+    modified_by: DataTypes.STRING,
+    date_deleted: DataTypes.DATE,
+    deleted_by: DataTypes.STRING
+  },
+  {
     sequelize,
     modelName: 'Suhu',
+    createdAt:"date_created",
+    deletedAt:"date_deleted",
+    updatedAt:"date_modified"
   });
+
+  Suhu.beforeCreate((instance)=>{
+    instance.date_modified = null
+  })
+
+  Suhu.beforeUpdate((instance) =>{
+    instance.modified_by = instance.email
+  })
+
   return Suhu;
 };
