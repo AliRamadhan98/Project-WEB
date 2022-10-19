@@ -18,4 +18,8 @@ app.listen(port, ()=>{
     console.log(`this app run at port ${port}`);
 })
 //test conflict
+<<<<<<< HEAD
 // sesuatu
+=======
+//conflict
+>>>>>>> e69d318577dcb95c6ea2b1fbd096f35ce9da414a
