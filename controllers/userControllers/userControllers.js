@@ -27,7 +27,6 @@ let login = async (req,res,next) =>{
             console.log(checkPassword)
             if(checkPassword){
                 let accessToken = await generateToken({id:checkUser.id, email:checkUser.email,phoneNumber:checkUser.phoneNumber})
-                console.log(accessToken,'<<<<<<<<<<<<<<<<<<<<<<<<<<')
                 res.status(200).json({accessToken:accessToken})
             } else {
                 res.status(404).json({message:"Wrong Password"})
@@ -41,11 +40,11 @@ let login = async (req,res,next) =>{
 }
 
 let inputRfId = async (req,res,next) =>{
-    let {username,rfId} = req.body
+    let {username,refId} = req.body
     try {
         let checkUser = await Users.findOne({where:{username:username}})
         if(checkUser){
-            let insertRfId = await Users.update({rfid:rfId,role:"admin"}).where({username:username})
+            let insertRfId = await Users.Update({rfid:refId,role:"admin"}).where({username:username})
             res.status(200).json({message:"Add RFID Successfull"})
         } else {
             res.status(400).json({message:"User Not Found"})
