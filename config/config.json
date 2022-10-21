@@ -4,7 +4,8 @@
     "password": "postgres",
     "database": "web_suhu",
     "host": "127.0.0.1",
-    "dialect": "postgresql"
+    "dialect": "postgresql",
+    "logging":false
   },
   "test": {
     "username": "root",
@@ -18,6 +19,7 @@
     "ssl": true,
     "dialect": "postgres",
     "protocol": "postgres",
+    "logging":false,
     "dialectOptions": {
       "ssl": {
         "require": true,
