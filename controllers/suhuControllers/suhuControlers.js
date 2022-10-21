@@ -2,13 +2,14 @@ let {Suhu,Users} = require('../../models')
 
 let addTemperature = async (req,res,next) =>{
     let {suhu,kelembaban,lat,lon} = req.body
+    console.log(req.body,"ISI BODY")
     let {userId,email} = req.user
     try {
         let checkUser =  await Users.findByPk(userId)
         if(checkUser){
             let latitude = lat ? lat : "0"
             let longitude = lon ? lon : "0"
-            console.log(suhu)
+            console.log(suhu,'ISI SUHU')
             await Suhu.create({UserId:userId,temp:suhu,humid:kelembaban,lat:latitude,lon:longitude,created_by:email})
             res.status(288).json({message:"Data Added Successfully"})
         }else{
