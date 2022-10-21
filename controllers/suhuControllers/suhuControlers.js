@@ -24,8 +24,8 @@ let getTemp = async (req,res,next) =>{
     try {
         let checkUser = await Users.findByPk(userId)
         if(checkUser){
-            let temp = await Suhu.findOne({UserId:userId})
-            if(temp){
+            let temp = await Suhu.findAll({UserId:userId,limit:10,orrder:["date_created","ASC"]})
+            if(temp.length > 0){
                 res.status(200).json({message:{temp,user:checkUser}})
             } else {
                 res.status(404).json({message:"Data not found"})
