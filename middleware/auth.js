@@ -3,6 +3,7 @@ const {Users} = require('../models')
 
 let authentication = async (req,res,next) =>{
     let token;
+    console.log(req.headers.authorization,"ISI AUTHORIZATION")
     if(req.headers.authorization){
         token = req.headers.authorization.split(" ")[1]
     } else {
